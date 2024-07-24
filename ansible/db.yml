@@ -1,0 +1,16 @@
+---
+- name: install and configure mysql
+  hosts: dbs
+  tasks:
+    - name: install latest mysql package
+      apt: 
+        name: mysql-server
+        state: latest
+        update_cache: true
+      become: true
+    - name: start mysql service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+      become: true

@@ -12,6 +12,10 @@ resource "google_compute_instance" "app" {
 
   #  metadata_startup_script = "shutdown -h now"
 
+  metadata = {
+    ssh-keys = "ansible:${file("../../secret/ansible.pub")}"
+  }
+
   network_interface {
     network = "default"
   }

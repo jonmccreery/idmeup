@@ -1,0 +1,4 @@
+- src: https://github.com/O1ahmad/ansible-role-grafana.git
+  scm: git
+  version: master
+  name: grafana

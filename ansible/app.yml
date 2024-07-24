@@ -1,0 +1,16 @@
+---
+- name: install and configure nginx
+  hosts: apps
+  tasks:
+    - name: install latest nginx package
+      apt: 
+        name: nginx 
+        state: latest
+        update_cache: true
+      become: true
+    - name: start nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      become: true
