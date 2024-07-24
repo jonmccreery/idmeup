@@ -14,12 +14,6 @@ resource "google_compute_instance" "bastion" {
     ssh-keys = "ansible:${file("../../secret/ansible.pub")}"
   }
 
-  #  provisioner "file" {
-  #    source      = "../../secret/ansible.pub"
-  #    destination = "/home/ansible/.ssh/ansible.pub"
-  #
-  #  }
-
   network_interface {
     network = "default"
     access_config {}

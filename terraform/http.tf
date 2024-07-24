@@ -9,13 +9,13 @@ resource "google_compute_instance" "http" {
       image = "ubuntu-minimal-2404-noble-amd64-v20240717"
     }
   }
- 
+
   metadata = {
     ssh-keys = "ansible:${file("../../secret/ansible.pub")}"
   }
 
   network_interface {
     network = "default"
-    access_config {}
   }
+
 }

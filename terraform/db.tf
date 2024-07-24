@@ -14,6 +14,5 @@ resource "google_compute_instance" "db" {
 
   network_interface {
     network = "default"
-    access_config {}
   }
 }
