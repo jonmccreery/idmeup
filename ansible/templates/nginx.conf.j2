@@ -4,12 +4,12 @@ events {
 
 http {
   upstream hello_app {
-    server app;
+    server app:5000;
   }
 
   server {
     listen 80;
-    location / {
+    location ~ / {
             proxy_pass http://hello_app;
     }
   }

@@ -1,16 +1,24 @@
 ---
-- name: install and configure nginx
+- name: install webapp
   hosts: apps
   tasks:
-    - name: install latest nginx package
-      apt: 
-        name: nginx 
-        state: latest
-        update_cache: true
+    - name: create service account 
+      user:
+        name: flask
+        create_home: true
       become: true
-    - name: start nginx service
-      service:
-        name: nginx
-        state: started
-        enabled: yes
+    - name: create application file
+      copy:
+        src: 'files/idmeup.py'
+        dest: '/home/flask/idmeup.py'
+        owner: flask
+        group: flask
       become: true
+      become_user: flask
+    - name: install flask
+      apt:
+        name: python3-flask
+        state: present
+      become: true
+    - name: execute idmeup app
+      shell: cd /home/flask; nohup flask --app idmeup run --host 0.0.0.0 </dev/null >/dev/null &

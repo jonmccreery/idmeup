@@ -1,4 +1,8 @@
-- src: https://github.com/O1ahmad/ansible-role-grafana.git
-  scm: git
-  version: master
-  name: grafana
+---
+roles:
+- src: 0x0i.grafana
+- src: 0x0i.systemd
+
+collections:
+- name: prometheus.prometheus
+
