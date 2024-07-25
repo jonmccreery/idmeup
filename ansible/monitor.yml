@@ -1,0 +1,4 @@
+- hosts: monitors
+  roles:
+  - role: 0x0i.grafana
+  - role: prometheus.prometheus.prometheus
