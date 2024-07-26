@@ -2,6 +2,12 @@
 - name: install and configure mysql
   hosts: dbs
   tasks:
+    - name: install mysql python package
+      apt:
+        name: python3-pymysql
+        state: latest
+        update_cache: true
+      become: true
     - name: install latest mysql package
       apt: 
         name: mysql-server
@@ -14,3 +20,31 @@
         state: started
         enabled: yes
       become: true
+    - name: seed user sql
+      copy:
+        src: files/create_user.sql
+        dest: /tmp/create_user.sql
+    - name: seed script
+      copy:
+        src: files/db_bootstrap.sh
+        dest: /tmp/db_bootstrap.sh
+        mode: a+x
+    - name: seed db sql
+      copy:
+        src: files/create_db.sql
+        dest: /tmp/create_db.sql
+    - name: seed table sql
+      copy:
+        src: files/create_table.sql
+        dest: /tmp/create_table.sql
+    - name: execute db script
+      command:
+        cmd: /tmp/db_bootstrap.sh
+      become: true
+    - name: create table
+      mysql_db:
+        name: idmeup
+        state: import
+        target: /tmp/create_table.sql
+        login_user: idmeup
+        login_password: password
