@@ -10,15 +10,12 @@
     - name: create application file
       copy:
         src: 'files/idmeup.py'
-        dest: '/home/flask/idmeup.py'
-        owner: flask
-        group: flask
+        dest: '/usr/local/bin/idmeup.py'
       become: true
-      become_user: flask
     - name: install flask
       apt:
         name: python3-flask
         state: present
       become: true
     - name: execute idmeup app
-      shell: cd /home/flask; nohup flask --app idmeup run --host 0.0.0.0 </dev/null >/dev/null &
+      shell: cd /usr/local/bin; nohup flask --app idmeup run --host 0.0.0.0 </dev/null >/dev/null &

@@ -1,5 +1,6 @@
 from flask import Flask
 from datetime import datetime
+import MySQLdb
 
 app = Flask(__name__)
 
@@ -11,7 +12,7 @@ def create_one_row():
                      db="idmeup")
 
     cur = db.cursor()
-    cur.execute("INSERT INTO idmeup (time) values ('{}')".format(now))
+    cur.execute("INSERT INTO idmeup (time) values ('{}')".format(now.strftime("%Y-%m-%d %H:%M:%S")))
     db.commit()
 
 @app.route("/")
