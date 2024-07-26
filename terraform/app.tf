@@ -1,16 +1,13 @@
 resource "google_compute_instance" "app" {
   name         = "app"
   machine_type = "e2-micro"
-  zone         = "us-central1-a"
+  zone         = "${var.zone}"
 
   boot_disk {
     initialize_params {
-      #image = "ubuntu-minimal-2004-focal-arm64-v20240714"
-      image = "ubuntu-minimal-2404-noble-amd64-v20240717"
+      image = "${var.image}"
     }
   }
-
-  #  metadata_startup_script = "shutdown -h now"
 
   metadata = {
     ssh-keys = "ansible:${file("../../secret/ansible.pub")}"
