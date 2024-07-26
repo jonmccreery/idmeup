@@ -1,8 +1,8 @@
-PROJECT="test1-430504"           # <== CHANGE
-SA_NAME="idmeauth"                           # <== CHANGE
-SA_KEY_FILE="/home/taxi/idme/secret/gcp_tf_key.json"
+PROJECT="test1-430504"                               # <== CHANGEME
+SA_NAME="idmeauth"                           
+SA_KEY_FILE="secret/gcp_tf_key.json" # <== CHANGEME
 
-gcloud iam service-accounts create $SA_NAME  --description "id.me please... for i am but a name" --display-name "$SA_NAME"
+gcloud iam service-accounts create $SA_NAME  --description "id.me please..." --display-name "$SA_NAME"
 
 # SET IAM policies
 gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAME}@${PROJECT}.iam.gserviceaccount.com --role roles/cloudsql.admin

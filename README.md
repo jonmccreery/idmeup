@@ -1,12 +1,12 @@
 # idmeup
-idmeup is a tiny web application that is deployed and managed using a custom designed build environment developed in four days.  The application itself along with other compute resources run on Google Compute instances under the management of Ansible, while the GCP envionment itself is provisioned using terraform.
+idmeup is a tiny web application that is deployed and managed using a custom designed build environment developed in four days.  The application itself, along with other compute resources, runs on Google Compute instances under the management of Ansible and the GCP envionment is provisioned using terraform.
 
 # design principles
-idme aims to be:
+idmeup aims to be:
 
-* automated:  The build system for idmeup is intened to 100% automated aside from populating site specific information such as ssh keys.  The entry point build.sh contains no logic and only executes terraform, ansible, and gcloud commands in sequence. 
+* automated:  The build system for idmeup is intened to be 100% automatic aside from populating site specific information such as ssh keys.  The entry point build.sh contains no logic and only executes terraform, ansible, and gcloud commands in sequence. 
 * autonomous: other than the a working installtion of terraform and ansible, the only thing you need to run idmeup is a Google Cloud account and the gcloud command line client installed with authentication configured correctly.
-* simple: in order to provide a clear view of the architecture of the system, all components have been built as minimally as possible while still retaining their purpose.
+* simple: in order to provide a clear view of the architecture of the system, all components have been built as minimally as possible while still retaining their function.
 * scalable: although elements of the application are currently only represented by a single instance, the system is designed to scale horizontally.
 
 # prereqs
@@ -23,6 +23,8 @@ The idmeup project has been designed from the ground up to be self contained and
 
 In order to achieve this goal, I needed to solve two fundamental problems.
 
-First, how to managed connectivity between my development laptop and the resources I was managing in GCP, and also how to expose the application to the world in a scalable way.  For the first problem, the solution was to distribute keys to compute instances using GCP metadata at deployment time, then creating a bastion host with a public IP that I use to tunnnel Ansible traffic. For public consumption, I put the web application behind a pool of nginx servers running as pass through proxies.  Those in turn are located behind a GCP load balancers also configured as pass through proxies.  I adopted this two level approach in order to give myself the isolation and massive scale of google's load balancing while still retaining a greater level of control over inbound traffic using nginx as the application's needs evolve.
+First, how to manage connectivity.  For command and control purposes, I needed a link to the project's VPC subnet and I also needed expose the application to the world in a scalable way.  For the first problem, I distribute keys to compute instances using GCP metadata at deployment time. I then create a bastion host with a public IP that I use to tunnnel Ansible traffic. 
 
-The second thing to design was a way to transfer information determined at build time, such as dynamically assigned IP address, from Terraform into Ansible.  The most straightforward way that I found was to directly create files in the idmeup working directory using a local_file resource in Terraform that I then reference during the Ansible run.
+To make the public interface between the application and the internet as robust as possible, I put the web application itself behind a pool of nginx servers running as pass through proxies.  Those in turn are located behind a GCP load balancer also configured as a raw TCP proxy.  I adopted this two level approach in order to give myself the isolation and massive scale of Google's load balancing infrstructure while still retaining a high level of control over inbound traffic using nginx.  As the application's needs evolve, it would be possible to implement more sophisticated balancing and routing stratagies, and terminating HTTPS traffic on infrastructure under our control gives similar benefits.
+
+Secondly, I needed to design a way to transfer information determined at build time, like dynamically assigned IP addresses, from Terraform into Ansible.  The most straightforward way that I found was to directly create files in the idmeup working directory using a local_file resource in Terraform that I then reference during the Ansible run.
