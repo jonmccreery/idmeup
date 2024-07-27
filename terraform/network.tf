@@ -22,7 +22,7 @@ resource "google_compute_backend_service" "webservers" {
 
 resource "google_compute_instance_group" "webservers" {
   name = "webservers"
-  zone = "us-central1-a"
+  zone = "${var.zone}"
 
   instances = [
     google_compute_instance.http.id
@@ -68,12 +68,12 @@ resource "google_compute_firewall" "default" {
 resource "google_compute_router" "default" {
   name    = "out-router"
   network = "default"
-  region  = "us-central1"
+  region  = "${var.region}"
 }
 
 resource "google_compute_router_nat" "default" {
   name                               = "out-router-nat"
-  region                             = "us-central1"
+  region                             = "${var.region}"
   router                             = google_compute_router.default.name
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   nat_ip_allocate_option             = "AUTO_ONLY"
