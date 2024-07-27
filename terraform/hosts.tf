@@ -1,4 +1,3 @@
----
 resource "google_compute_instance" "http" {
   name         = "http"
   machine_type = "${var.default_machine_type}"
@@ -102,7 +101,7 @@ resource "google_compute_instance" "db" {
 
 resource "google_compute_instance" "monitor" {
   name         = "monitor"
-  Machine_type = "${var.default_machine_type}"
+  machine_type = "${var.default_machine_type}"
   zone         = "${var.zone}"
 
   boot_disk {

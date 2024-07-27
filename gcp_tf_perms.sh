@@ -17,6 +17,7 @@ gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAM
 gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAME}@${PROJECT}.iam.gserviceaccount.com --role roles/iam.serviceAccountAdmin
 gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAME}@${PROJECT}.iam.gserviceaccount.com --role roles/iam.serviceAccountUser
 gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAME}@${PROJECT}.iam.gserviceaccount.com --role roles/resourcemanager.projectIamAdmin
+gcloud projects add-iam-policy-binding $PROJECT --member serviceAccount:${SA_NAME}@${PROJECT}.iam.gserviceaccount.com --role roles/dns.admin
 
 # create keyfile
 # set the 'credentials' attribute in the google terraform provider's resource block
