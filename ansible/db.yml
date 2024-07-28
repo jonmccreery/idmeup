@@ -14,6 +14,11 @@
         state: latest
         update_cache: true
       become: true
+    - name: configure mysqld
+      copy: 
+        src: files/mysqld.cnf
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+      become: true
     - name: start mysql service
       service:
         name: mysql
