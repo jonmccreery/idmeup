@@ -1,11 +1,9 @@
 ---
 collections:
   - name: community.mysql
----
+  - name: prometheus.prometheus
+
+
 roles:
 - src: 0x0i.grafana
 - src: 0x0i.systemd
-
-collections:
-- name: prometheus.prometheus
-

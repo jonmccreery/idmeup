@@ -2,11 +2,6 @@
 - name: install webapp
   hosts: apps
   tasks:
-    - name: create service account 
-      user:
-        name: flask
-        create_home: true
-      become: true
     - name: create application file
       copy:
         src: 'files/idmeup.py'

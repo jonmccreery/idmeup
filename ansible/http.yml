@@ -1,11 +1,4 @@
 ---
-#- name: add nginx PPA
-#  hosts: https
-#  apt_repository:
-#    repo: deb [trusted=yes] https://ppa.launchpadcontent.net/nginx/stable/ubuntu noble main
-#    state: present
-#  become: true
-
 - name: install nginx and deploy a templated configuration
   hosts: https
   tasks:
