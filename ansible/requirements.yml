@@ -1,4 +1,7 @@
 ---
+collections:
+  - name: community.mysql
+---
 roles:
 - src: 0x0i.grafana
 - src: 0x0i.systemd
