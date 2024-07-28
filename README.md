@@ -17,6 +17,17 @@ idmeup aims to be:
 * a staging directory that contains both this repository and a directory named 'secret' containing:
   * the public half of an ssh key generated using ssh-keygen named 'ansible.pub'.  the private half should also be there named 'ansible'
 
+# installation
+--------------
+* mkdir staging
+* cd staging
+* git clone <url>
+* ssh-keygen <foo>
+* edit gcp_tf_perms.sh
+* ./gcp_tf_perms.sh
+* edit terraform/terraform.tfvars
+* ./build.sh
+
 # theory of operation
 --------------------
 The idmeup project has been designed from the ground up to be self contained and fully automated.  As such, other than a working internet connection and an account with Google, no other services or accounts should be necessary.
