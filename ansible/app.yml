@@ -2,6 +2,11 @@
 - name: install webapp
   hosts: apps
   tasks:
+    - name: install db package
+      apt:
+        name: python3-mysqldb
+        state: present
+      become: true
     - name: create application file
       copy:
         src: 'files/idmeup.py'
@@ -14,3 +19,6 @@
       become: true
     - name: execute idmeup app
       shell: cd /usr/local/bin; nohup flask --app idmeup run --host 0.0.0.0 </dev/null >/dev/null &
+      become: true
+  roles:
+    - prometheus.prometheus.node_exporter

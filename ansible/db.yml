@@ -19,6 +19,12 @@
         src: files/mysqld.cnf
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
       become: true
+      register: my_conf
+    - name: restart service
+      service:
+        name: mysql
+        state: restarted
+      when: my_conf.changed
     - name: start mysql service
       service:
         name: mysql
@@ -53,3 +59,5 @@
         target: /tmp/create_table.sql
         login_user: idmeup
         login_password: password
+  roles:
+    - prometheus.prometheus.node_exporter

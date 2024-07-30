@@ -65,7 +65,7 @@ resource "google_compute_firewall" "default" {
   source_ranges = ["35.191.0.0/16", "130.211.0.0/22"]
 }
 
-resource "google_compute_router" "default" {
+resource "google_compute_router" "out-router" {
   name    = "out-router"
   network = "default"
   region  = "${var.region}"
@@ -74,7 +74,7 @@ resource "google_compute_router" "default" {
 resource "google_compute_router_nat" "default" {
   name                               = "out-router-nat"
   region                             = "${var.region}"
-  router                             = google_compute_router.default.name
+  router                             = google_compute_router.out-router.name
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   nat_ip_allocate_option             = "AUTO_ONLY"
 }

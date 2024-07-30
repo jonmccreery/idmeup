@@ -24,6 +24,8 @@
         state: started
         enabled: yes
       become: true
+  roles:
+    - prometheus.prometheus.node_exporter
 
   
 
